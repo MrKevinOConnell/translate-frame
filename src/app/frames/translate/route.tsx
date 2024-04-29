@@ -125,6 +125,7 @@ const handler = frames(async (ctx: any) => {
         Share
       </Button>,
     ],
+    state: updatedState,
   };
 });
 

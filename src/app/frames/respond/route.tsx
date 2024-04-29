@@ -23,7 +23,6 @@ export const POST = frames(async (ctx: any) => {
   }
   const hash = ctx.state.hash;
   const cast_fid = ctx.state.fid;
-  const opt_in = Boolean(ctx.searchParams.opt_in) ?? false;
   const author_fid = ctx.message?.requesterFid;
   const target = ctx.state.target;
   let signer_approval_url = null;
