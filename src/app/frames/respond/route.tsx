@@ -3,6 +3,7 @@ import { frames } from "../frames";
 import { installUrl } from "../../utils";
 import {
   add_or_update_signer_on_supabase,
+  add_translation_to_supabase,
   get_all_translations_for_hash,
   lookup_fid_signer_on_supabase,
   update_signer_tip,
@@ -19,7 +20,7 @@ export const POST = frames(async (ctx) => {
   const hash = ctx.state.hash;
   const cast_fid = ctx.state.fid;
   const opt_in = Boolean(ctx.searchParams.opt_in) ?? false;
-  const translator_fid = ctx.message?.requesterFid;
+  const author_fid = ctx.message?.requesterFid;
   const target = ctx.state.target;
   let signer_approval_url = null;
   let src_language = null;
@@ -58,11 +59,22 @@ export const POST = frames(async (ctx) => {
         const translated_text = await translate_text(response, src_language);
         const cast = await neynar_client.publishCast(
           signer.signer_uuid,
-          translated_text.translatedText,
+          `${translated_text.translatedText}\n\n ${APP_URL!}/frames`,
           {
             replyTo: hash,
           }
         );
+        //add to supabase
+        const row = {
+          translated_text: translated_text.translatedText,
+          translated_language: target,
+          hash: cast.hash,
+          author_fid: cast.author.fid,
+          translator_fid: cast.author.fid,
+          src_text: response,
+          src_language: translated_text.srcLanguage,
+        };
+        add_translation_to_supabase(row);
       }
     }
   }

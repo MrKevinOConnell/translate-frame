@@ -81,21 +81,7 @@ const handler = frames(async (ctx) => {
     const { srcLanguage, translatedText } = await translate_text(text, target);
     translated_text = translatedText;
     src_language = srcLanguage;
-    const profile = await neynar_client.fetchBulkUsers([translatorFid as any]);
-    const translate_cast_send = `This cast in ${target} is the following: ${translatedText}. Requested by ${
-      profile.users[0].username
-    }:\n\n   ${APP_URL!}/frames/translate?hash=${hash}&fid=${fid}`;
-    const { translatedText: castSendTranslation } = await translate_text(
-      translate_cast_send,
-      target
-    );
-    const cast = await neynar_client.publishCast(
-      NEYNAR_BOT_SIGNER as any,
-      castSendTranslation,
-      {
-        replyTo: hash,
-      }
-    );
+
     const row = {
       translated_text: translatedText,
       translated_language: target,
