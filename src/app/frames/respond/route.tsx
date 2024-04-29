@@ -93,7 +93,7 @@ export const POST = frames(async (ctx: any) => {
       <Button
         action="link"
         target={`https://warpcast.com/~/compose?embeds[]=${encodeURIComponent(
-          `${APP_URL}/frames`
+          `${APP_URL}/frames/`
         )}`}
       >
         Share
@@ -103,6 +103,9 @@ export const POST = frames(async (ctx: any) => {
         target={`https://warpcast.com/${profile_info.users[0].username}/${cast_info?.hash}`}
       >
         View cast
+      </Button>,
+      <Button action="post" target={`/signer?opt_in=true`}>
+        Optionally tip 5% of allowance or 500 DEGEN every two weeks.
       </Button>,
     ],
   };

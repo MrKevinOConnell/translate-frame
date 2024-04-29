@@ -12,7 +12,7 @@ export async function check_if_hash_translated_language_exists(
   try {
     const { data, error } = await supabase
       .from("translations")
-      .select("translated_language, translated_text")
+      .select("translated_language, translated_text, src_language")
       .eq("hash", hash)
       .eq("translated_language", translated_language);
 
