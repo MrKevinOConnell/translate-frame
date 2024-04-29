@@ -3,9 +3,9 @@ import { frames } from "./frames";
 import { installUrl } from "../utils";
 
 const handler = frames(async (ctx) => {
-  const installEnglish = installUrl("en");
-  const installChinese = installUrl("zh");
-  const installKorean = installUrl("ko");
+  const installEnglish = installUrl("EN");
+  const installChinese = installUrl("ZH");
+  const installKorean = installUrl("KO");
 
   return {
     image: (
@@ -16,7 +16,7 @@ const handler = frames(async (ctx) => {
         </div>
       </div>
     ),
-    textInput: "Search a language code e.g. 'en'",
+    textInput: "Search a language code e.g. 'EN'",
     buttons: [
       <Button action="post" target={"/search"}>
         🔎 Search

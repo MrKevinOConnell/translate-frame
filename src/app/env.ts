@@ -1,1 +1,9 @@
-export const { APP_URL, GOOGLE_TRANSLATE_API_KEY, HUB_API_URL } = process.env;
+export const {
+  APP_URL,
+  DEEPL_API_KEY,
+  HUB_API_URL,
+  NEYNAR_API_KEY,
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  NEYNAR_SIGNER,
+} = process.env;

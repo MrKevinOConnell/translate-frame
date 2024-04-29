@@ -7,7 +7,7 @@ export const POST = frames(async (ctx) => {
 
   if (!language) {
     return {
-      textInput: "Search a language code e.g. 'en'",
+      textInput: "Search a language code e.g. 'EN'",
       image: <div tw="flex">No language provided</div>,
       buttons: [
         <Button action="post" target={"/search"}>
@@ -20,15 +20,15 @@ export const POST = frames(async (ctx) => {
     };
   }
 
-  let languageCode = language.toLowerCase().slice(0, 2);
-  const languageNames = new Intl.DisplayNames(["en"], {
+  let languageCode = language.slice(0, 2);
+  const languageNames = new Intl.DisplayNames(["EN"], {
     type: "language",
   });
   const languageName = languageNames.of(languageCode);
 
   if (!languageName) {
     return {
-      textInput: "Search a language code e.g. 'en'",
+      textInput: "Search a language code e.g. 'EN'",
       image: <div tw="flex">Language '{languageCode}' not found</div>,
       buttons: [
         <Button action="post" target={"/search"}>
@@ -47,7 +47,7 @@ export const POST = frames(async (ctx) => {
         Install action for {languageNames.of(languageCode)}
       </div>
     ),
-    textInput: "Search a language code e.g. 'en'",
+    textInput: "Search a language code e.g. 'EN'",
     buttons: [
       <Button action="post" target={"/search"}>
         🔎 Search

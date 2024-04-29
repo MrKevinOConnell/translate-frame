@@ -18,9 +18,9 @@ type ActionMetadata = {
 };
 
 export const GET = (req: NextRequest) => {
-  const target = req.nextUrl.searchParams.get("target") || "en";
+  const target = req.nextUrl.searchParams.get("target") || "EN";
 
-  const languageNames = new Intl.DisplayNames(["en"], {
+  const languageNames = new Intl.DisplayNames(["EN"], {
     type: "language",
   });
 
@@ -45,7 +45,7 @@ export const POST = frames(async (ctx) => {
     frameUrl: `${APP_URL}/frames/translate?hash=${
       ctx.message?.castId?.hash
     }&fid=${ctx.message?.castId?.fid}&target=${
-      ctx.searchParams.target || "en"
+      ctx.searchParams.target || "EN"
     }`,
   });
 });
