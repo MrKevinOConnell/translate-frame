@@ -97,7 +97,6 @@ const handler = frames(async (ctx: any) => {
     };
     add_translation_to_supabase(row);
   }
-  const url = encodeURIComponent();
   return {
     textInput:
       signer && signer.status === "approved"
