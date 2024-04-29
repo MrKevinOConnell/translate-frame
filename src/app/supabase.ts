@@ -85,39 +85,21 @@ export async function add_translation_to_supabase(row: any) {
   }
 }
 
-export async function lookup_fid_signer_on_supabase(
-  fid: number | undefined
-): Promise<any> {
+export async function lookup_fid_signer_on_supabase(fid: number) {
   if (!fid) return null;
   const { data, error } = await supabase
     .from("signers")
     .select("*")
     .eq("fid", fid);
-
-  if (error) {
-    console.error("Error fetching data:", error);
-    return null;
-  }
-  if (data.length === 0) {
-    console.log("No matching row exists.");
-    return null;
-  }
-  const row = data[0];
-  return row;
+  if (error)
+    throw new Error("Error fetching data from Supabase: " + error.message);
+  return data.length ? data[0] : null;
 }
 
 export async function add_or_update_signer_on_supabase(signer: any) {
-  try {
-    const { data, error } = await supabase.from("signers").upsert([signer]);
-    if (error) {
-      console.error("Error inserting data:", error);
-      return;
-    }
-    console.log("Signer added/updated:", data);
-    return data;
-  } catch (err) {
-    console.error("Unexpected error:", err);
-  }
+  const { error } = await supabase.from("signers").upsert([signer]);
+  if (error)
+    throw new Error("Error updating signer in Supabase: " + error.message);
 }
 
 export async function update_signer_tip(

@@ -15,7 +15,7 @@ import { frames } from "../frames";
 import { translate_text } from "@/app/helpers/translation";
 import { neynar_client } from "@/app/neynar";
 
-const handler = frames(async (ctx) => {
+const handler = frames(async (ctx: any) => {
   const translatorFid = ctx.message?.requesterFid;
   const hash = ctx.searchParams.hash;
   const fid = ctx.searchParams.fid;
@@ -72,7 +72,7 @@ const handler = frames(async (ctx) => {
   let src_language = "";
   const [supabase_translated_text, signer] = await Promise.all([
     await check_if_hash_translated_language_exists(hash, target),
-    await lookup_fid_signer_on_supabase(translatorFid),
+    await lookup_fid_signer_on_supabase(translatorFid as number),
   ]);
 
   if (supabase_translated_text) {

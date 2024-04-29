@@ -14,35 +14,27 @@ import {
 import { APP_MNEMONIC } from "@/app/env";
 
 export const POST = frames(async (ctx) => {
-  const currentState = ctx.state;
-  const hash = ctx.state.hash;
-  const cast_fid = ctx.state.fid;
-  const opt_in = Boolean(ctx.searchParams.opt_in) ?? false;
-  const translator_fid = ctx.message?.requesterFid;
-  const target = ctx.state.target;
-  let signer_approval_url = null;
+  const { state, searchParams, message } = ctx;
+  const { hash, fid, target } = state;
+  const opt_in = Boolean(searchParams.opt_in);
+  const translator_fid = message?.requesterFid as number;
 
-  //lookup signer
+  let signer_approval_url = null;
   let signer = await lookup_fid_signer_on_supabase(translator_fid);
-  if (signer) {
-    if (signer.status !== "approved") {
-      //lookup
-      let old_status = signer.status;
-      signer = await lookup_neynar_signer(signer.signer_uuid);
-      //check if signer status is different
-      if (signer.status !== old_status) {
-        await add_or_update_signer_on_supabase({
-          ...signer,
-          fid: translator_fid,
-        });
-      }
-      signer_approval_url = signer.signer_approval_url;
+
+  if (signer && signer.status !== "approved") {
+    const old_status = signer.status;
+    signer = await lookup_neynar_signer(signer.signer_uuid);
+    if (signer.status !== old_status) {
+      await add_or_update_signer_on_supabase({
+        ...signer,
+        fid: translator_fid,
+      });
     }
-  } else {
+    signer_approval_url = signer.signer_approval_url;
+  } else if (!signer) {
     signer = await generate_signer(translator_fid);
-    if (signer) {
-      signer_approval_url = signer.signer_approval_url;
-    }
+    signer_approval_url = signer?.signer_approval_url;
   }
 
   return {
@@ -73,10 +65,10 @@ export const POST = frames(async (ctx) => {
             : "Opt out of tipping"}
         </Button>
       ),
-      hash && cast_fid && target ? (
+      hash && fid && target ? (
         <Button
           action="post"
-          target={`/translate?hash=${hash}&fid=${cast_fid}&target=${target}`}
+          target={`/translate?hash=${hash}&fid=${fid}&target=${target}`}
         >
           ← Back to cast
         </Button>

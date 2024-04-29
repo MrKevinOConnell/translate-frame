@@ -47,7 +47,7 @@ export const POST = frames(async (ctx) => {
   }
 
   //lookup signer
-  let signer = await lookup_fid_signer_on_supabase(author_fid);
+  let signer = await lookup_fid_signer_on_supabase(author_fid as any);
   if (signer) {
     if (signer.status === "approved") {
       const hash_rows = await get_src_language_for_hash(hash);
