@@ -16,12 +16,10 @@ import { APP_MNEMONIC } from "@/app/env";
 export const POST = frames(async (ctx) => {
   const currentState = ctx.state;
   const hash = ctx.state.hash;
-
   const cast_fid = ctx.state.fid;
   const opt_in = Boolean(ctx.searchParams.opt_in) ?? false;
   const translator_fid = ctx.message?.requesterFid;
   const target = ctx.state.target;
-  let signer_uuid = null;
   let signer_approval_url = null;
 
   //lookup signer
@@ -38,13 +36,11 @@ export const POST = frames(async (ctx) => {
           fid: translator_fid,
         });
       }
-      signer_uuid = signer.signer_uuid;
       signer_approval_url = signer.signer_approval_url;
     }
   } else {
     signer = await generate_signer(translator_fid);
     if (signer) {
-      signer_uuid = signer.signer_uuid;
       signer_approval_url = signer.signer_approval_url;
     }
   }
