@@ -96,7 +96,10 @@ const handler = frames(async (ctx) => {
   }
 
   return {
-    textInput: signer ? `Respond in ${src_language}!` : undefined,
+    textInput:
+      signer && signer.status === "approved"
+        ? `Respond in ${src_language}!`
+        : undefined,
     image: (
       <div tw="flex p-10 text-[42px]">
         <p>Here is your translation: {translated_text}</p>
