@@ -2,7 +2,10 @@ import { Button } from "frames.js/next";
 import { frames } from "../frames";
 import { installUrl } from "../../utils";
 
-export const POST = frames(async (ctx) => {
+export const POST = frames(async (ctx: any) => {
+  if (!ctx.message.isValid) {
+    throw new Error("Invalid Frame");
+  }
   const language = ctx.message?.inputText;
 
   if (!language) {

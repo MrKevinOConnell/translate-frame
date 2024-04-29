@@ -17,7 +17,10 @@ import {
 import { APP_MNEMONIC, APP_URL } from "@/app/env";
 import { translate_text } from "@/app/helpers/translation";
 
-export const POST = frames(async (ctx) => {
+export const POST = frames(async (ctx: any) => {
+  if (!ctx.message.isValid) {
+    throw new Error("Invalid Frame");
+  }
   const hash = ctx.state.hash;
   const cast_fid = ctx.state.fid;
   const opt_in = Boolean(ctx.searchParams.opt_in) ?? false;

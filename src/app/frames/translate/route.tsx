@@ -16,6 +16,9 @@ import { translate_text } from "@/app/helpers/translation";
 import { neynar_client } from "@/app/neynar";
 
 const handler = frames(async (ctx: any) => {
+  if (!ctx.message.isValid) {
+    throw new Error("Invalid Frame");
+  }
   const translatorFid = ctx.message?.requesterFid;
   const hash = ctx.searchParams.hash;
   const fid = ctx.searchParams.fid;

@@ -13,7 +13,10 @@ import {
 } from "@/app/neynar";
 import { APP_MNEMONIC } from "@/app/env";
 
-export const POST = frames(async (ctx) => {
+export const POST = frames(async (ctx: any) => {
+  if (!ctx.message.isValid) {
+    throw new Error("Invalid Frame");
+  }
   const start = Date.now();
   const { state, searchParams, message } = ctx;
   const { hash, fid, target } = state;
