@@ -97,9 +97,13 @@ export async function lookup_fid_signer_on_supabase(fid: number) {
 }
 
 export async function add_or_update_signer_on_supabase(signer: any) {
-  const { error } = await supabase.from("signers").upsert([signer]);
+  const { data, error } = await supabase
+    .from("signers")
+    .upsert([signer])
+    .select();
   if (error)
     throw new Error("Error updating signer in Supabase: " + error.message);
+  console.log("Signer added/updated successfully:", data);
 }
 
 export async function update_signer_tip(
