@@ -41,7 +41,7 @@ const handler = frames(async (ctx: any) => {
       image: <div tw="flex">No cast author fid provided</div>,
       buttons: [
         <Button action="post" target={"/"}>
-          Install action
+          ← Back
         </Button>,
       ],
       state: updatedState,
@@ -109,9 +109,6 @@ const handler = frames(async (ctx: any) => {
       </div>
     ),
     buttons: [
-      <Button action="post" target={`/`}>
-        Install action
-      </Button>,
       signer && signer.status === "approved" ? (
         <Button action="post" target={`/respond?hash=${hash}`}>
           Respond

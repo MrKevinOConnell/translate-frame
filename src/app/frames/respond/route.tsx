@@ -36,9 +36,6 @@ export const POST = frames(async (ctx: any) => {
         <div tw="flex">No response provided, please go back and enter one.</div>
       ),
       buttons: [
-        <Button action="post" target={`/`}>
-          Install action
-        </Button>,
         <Button
           action="post"
           target={`/translate?hash=${hash}&fid=${cast_fid}&target=${target}`}
@@ -90,9 +87,6 @@ export const POST = frames(async (ctx: any) => {
       </div>
     ),
     buttons: [
-      <Button action="post" target={`/`}>
-        Install action
-      </Button>,
       hash && cast_fid && target ? (
         <Button
           action="post"

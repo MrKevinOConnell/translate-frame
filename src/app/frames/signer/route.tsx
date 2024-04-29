@@ -51,9 +51,6 @@ export const POST = frames(async (ctx: any) => {
       </div>
     ),
     buttons: [
-      <Button action="post" target={`/`}>
-        Install action
-      </Button>,
       signer && signer.status !== "approved" ? (
         <Button action="link" target={signer_approval_url}>
           Approve signer
