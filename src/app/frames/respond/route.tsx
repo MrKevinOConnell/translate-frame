@@ -92,7 +92,9 @@ export const POST = frames(async (ctx: any) => {
       ) : null,
       <Button
         action="link"
-        target={`https://warpcast.com/~/compose?embeds[]=${`${APP_URL}/frames`}`}
+        target={`https://warpcast.com/~/compose?embeds[]=${encodeURIComponent(
+          `${APP_URL}/frames`
+        )}`}
       >
         Share
       </Button>,

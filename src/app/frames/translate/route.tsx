@@ -16,9 +16,6 @@ import { translate_text } from "@/app/helpers/translation";
 import { neynar_client } from "@/app/neynar";
 
 const handler = frames(async (ctx: any) => {
-  if (!ctx.message.isValid) {
-    throw new Error("Invalid Frame");
-  }
   const translatorFid = ctx.message?.requesterFid;
   const hash = ctx.searchParams.hash;
   const fid = ctx.searchParams.fid;
@@ -119,9 +116,9 @@ const handler = frames(async (ctx: any) => {
       ),
       <Button
         action="link"
-        target={`https://warpcast.com/~/compose?embeds[]=${encodeURIComponent(
-          APP_URL as string
-        )}/frames/translate?hash=${hash}&fid=${fid}&target=${target}`}
+        target={`https://warpcast.com/~/compose?embeds[]=${encodeURIComponent(`
+         ${APP_URL as string}
+        /frames/translate?hash=${hash}&fid=${fid}&target=${target}`)}`}
       >
         Share
       </Button>,
