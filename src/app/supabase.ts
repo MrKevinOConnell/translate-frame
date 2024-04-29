@@ -72,8 +72,8 @@ export async function lookup_fid_signer_on_supabase(
 ): Promise<any> {
   if (!fid) return null;
   const { data, error } = await supabase
-    .from("*")
-    .select("signer")
+    .from("signers")
+    .select("*")
     .eq("fid", fid);
 
   if (error) {
