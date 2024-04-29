@@ -95,6 +95,7 @@ export async function add_or_update_signer_on_supabase(signer: any) {
       console.error("Error inserting data:", error);
       return;
     }
+    console.log("Signer added/updated:", data);
     return data;
   } catch (err) {
     console.error("Unexpected error:", err);

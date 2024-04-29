@@ -17,7 +17,7 @@ export const generate_signer = async (fid: any) => {
     }
   );
   if (signer) {
-    await add_or_update_signer_on_supabase(signer);
+    await add_or_update_signer_on_supabase({ ...signer, fid });
   }
   return signer;
 };

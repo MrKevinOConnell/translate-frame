@@ -41,6 +41,7 @@ const handler = frames(async (ctx) => {
           Install action
         </Button>,
       ],
+      state: updatedState,
     };
   }
 

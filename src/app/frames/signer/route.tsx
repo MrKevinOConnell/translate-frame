@@ -14,7 +14,9 @@ import {
 import { APP_MNEMONIC } from "@/app/env";
 
 export const POST = frames(async (ctx) => {
+  const currentState = ctx.state;
   const hash = ctx.state.hash;
+
   const cast_fid = ctx.state.fid;
   const opt_in = Boolean(ctx.searchParams.opt_in) ?? false;
   const translator_fid = ctx.message?.requesterFid;
@@ -31,22 +33,22 @@ export const POST = frames(async (ctx) => {
       signer = await lookup_neynar_signer(signer.signer_uuid);
       //check if signer status is different
       if (signer.status !== old_status) {
-        await add_or_update_signer_on_supabase(signer);
+        await add_or_update_signer_on_supabase({
+          ...signer,
+          fid: translator_fid,
+        });
       }
       signer_uuid = signer.signer_uuid;
-      signer_approval_url = signer.approval_url;
+      signer_approval_url = signer.signer_approval_url;
     }
   } else {
     signer = await generate_signer(translator_fid);
     if (signer) {
       signer_uuid = signer.signer_uuid;
-      signer_approval_url = signer.approval_url;
+      signer_approval_url = signer.signer_approval_url;
     }
   }
-
-  if (signer_uuid && opt_in !== undefined && opt_in !== signer.tip_opt_in) {
-    await update_signer_tip(signer_uuid, opt_in);
-  }
+  console.log("signer", signer);
 
   return {
     image: (
@@ -64,7 +66,7 @@ export const POST = frames(async (ctx) => {
       </Button>,
       signer && signer.status !== "approved" ? (
         <Button action="link" target={signer_approval_url}>
-          Approve signer via Warpcast
+          Approve signer
         </Button>
       ) : (
         <Button
