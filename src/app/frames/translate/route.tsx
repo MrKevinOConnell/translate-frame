@@ -97,7 +97,7 @@ const handler = frames(async (ctx: any) => {
     };
     add_translation_to_supabase(row);
   }
-
+  const url = encodeURIComponent();
   return {
     textInput:
       signer && signer.status === "approved"
@@ -120,7 +120,9 @@ const handler = frames(async (ctx: any) => {
       ),
       <Button
         action="link"
-        target={`https://warpcast.com/~/compose?embeds[]=${`${APP_URL}/frames/translate?hash=${hash}&fid=${fid}&target=${target}`}`}
+        target={`https://warpcast.com/~/compose?embeds[]=${encodeURIComponent(
+          APP_URL as string
+        )}/frames/translate?hash=${hash}&fid=${fid}&target=${target}`}
       >
         Share
       </Button>,
