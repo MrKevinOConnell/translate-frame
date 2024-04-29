@@ -8,7 +8,7 @@ const supabase = createClient(SUPABASE_URL as string, SUPABASE_KEY as string);
 export async function check_if_hash_translated_language_exists(
   hash: string,
   translated_language: string
-) {
+): Promise<any> {
   try {
     const { data, error } = await supabase
       .from("translations")
@@ -61,6 +61,55 @@ export async function add_translation_to_supabase(row: any) {
       console.error("Error inserting data:", error);
       return;
     }
+    return data;
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+export async function lookup_fid_signer_on_supabase(
+  fid: number | undefined
+): Promise<any> {
+  if (!fid) return null;
+  const { data, error } = await supabase
+    .from("*")
+    .select("signer")
+    .eq("fid", fid);
+
+  if (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+  if (data.length === 0) {
+    console.log("No matching row exists.");
+    return null;
+  }
+  const row = data[0];
+  return row;
+}
+
+export async function add_or_update_signer_on_supabase(signer: any) {
+  try {
+    const { data, error } = await supabase.from("signers").upsert([signer]);
+    if (error) {
+      console.error("Error inserting data:", error);
+      return;
+    }
+    return data;
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+export async function update_signer_tip(
+  signer_uuid: string,
+  tip_opt_in: boolean
+) {
+  try {
+    const { data, error } = await supabase
+      .from("signers")
+      .update({ tip_opt_in })
+      .eq("signer_uuid", signer_uuid);
     return data;
   } catch (err) {
     console.error("Unexpected error:", err);

@@ -5,5 +5,6 @@ export const {
   NEYNAR_API_KEY,
   SUPABASE_URL,
   SUPABASE_KEY,
-  NEYNAR_SIGNER,
+  NEYNAR_BOT_SIGNER,
+  APP_MNEMONIC,
 } = process.env;
