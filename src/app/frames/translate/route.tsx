@@ -128,7 +128,7 @@ const handler = frames(async (ctx: any) => {
     state: updatedState,
     headers: {
       // Max cache age in seconds
-      "Cache-Control": "max-age=30",
+      "Cache-Control": "max-age=10",
     },
   };
 });
