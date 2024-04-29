@@ -1,20 +1,12 @@
 import { Button } from "frames.js/next";
 import { frames } from "../frames";
-import { installUrl } from "../../utils";
 import {
-  add_or_update_signer_on_supabase,
   add_translation_to_supabase,
-  get_all_translations_for_hash,
   get_src_language_for_hash,
   lookup_fid_signer_on_supabase,
-  update_signer_tip,
 } from "@/app/supabase";
-import {
-  generate_signer,
-  lookup_neynar_signer,
-  neynar_client,
-} from "@/app/neynar";
-import { APP_MNEMONIC, APP_URL } from "@/app/env";
+import { neynar_client } from "@/app/neynar";
+import { APP_URL } from "@/app/env";
 import { translate_text } from "@/app/helpers/translation";
 
 export const POST = frames(async (ctx: any) => {
@@ -25,6 +17,7 @@ export const POST = frames(async (ctx: any) => {
   const cast_fid = ctx.state.fid;
   const author_fid = ctx.message?.requesterFid;
   const target = ctx.state.target;
+  const profile_info = await neynar_client.fetchBulkUsers([author_fid]);
   let src_language = null;
   const response = ctx.message?.inputText;
   let translatedText = null;
@@ -105,7 +98,7 @@ export const POST = frames(async (ctx: any) => {
       </Button>,
       <Button
         action="link"
-        target={`https://warpcast.com/${cast_info?.author.username}/${cast_info?.hash}`}
+        target={`https://warpcast.com/${profile_info.users[0].username}/${cast_info?.hash}`}
       >
         View cast
       </Button>,
