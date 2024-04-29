@@ -14,6 +14,7 @@ import {
 import { APP_MNEMONIC } from "@/app/env";
 
 export const POST = frames(async (ctx) => {
+  const start = Date.now();
   const { state, searchParams, message } = ctx;
   const { hash, fid, target } = state;
   const opt_in = Boolean(searchParams.opt_in);
@@ -21,11 +22,10 @@ export const POST = frames(async (ctx) => {
 
   let signer_approval_url = null;
   let signer = await lookup_fid_signer_on_supabase(translator_fid);
-
   if (signer && signer.status !== "approved") {
     const old_status = signer.status;
     signer = await lookup_neynar_signer(signer.signer_uuid);
-    if (signer.status !== old_status) {
+    if (signer.status !== "approved" && old_status !== signer.status) {
       await add_or_update_signer_on_supabase({
         ...signer,
         fid: translator_fid,
@@ -71,6 +71,11 @@ export const POST = frames(async (ctx) => {
           target={`/translate?hash=${hash}&fid=${fid}&target=${target}`}
         >
           ← Back to cast
+        </Button>
+      ) : null,
+      signer && signer.status !== "approved" ? (
+        <Button action="post" target={"/signer"}>
+          Refresh
         </Button>
       ) : null,
     ],
