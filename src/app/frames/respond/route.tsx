@@ -53,7 +53,7 @@ export const POST = frames(async (ctx: any) => {
         translatedText = translated_text.translatedText;
         const cast = await neynar_client.publishCast(
           signer.signer_uuid,
-          `${translated_text.translatedText}\n\n\n https://translate-frame-one.vercel.app/frames`,
+          `${translated_text.translatedText}`,
           {
             replyTo: hash,
           }
