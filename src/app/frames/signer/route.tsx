@@ -48,7 +48,6 @@ export const POST = frames(async (ctx) => {
       signer_approval_url = signer.signer_approval_url;
     }
   }
-  console.log("signer", signer);
 
   return {
     image: (
