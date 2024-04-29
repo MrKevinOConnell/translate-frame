@@ -25,9 +25,10 @@ export const POST = frames(async (ctx: any) => {
   const cast_fid = ctx.state.fid;
   const author_fid = ctx.message?.requesterFid;
   const target = ctx.state.target;
-  let signer_approval_url = null;
   let src_language = null;
   const response = ctx.message?.inputText;
+  let translatedText = null;
+  let cast_info = null;
 
   if (!response) {
     return {
@@ -56,6 +57,7 @@ export const POST = frames(async (ctx: any) => {
       //if src_language, translate
       if (src_language) {
         const translated_text = await translate_text(response, src_language);
+        translatedText = translated_text.translatedText;
         const cast = await neynar_client.publishCast(
           signer.signer_uuid,
           `${translated_text.translatedText}\n\n ${APP_URL!}/frames`,
@@ -63,6 +65,7 @@ export const POST = frames(async (ctx: any) => {
             replyTo: hash,
           }
         );
+        cast_info = cast;
         //add to supabase
         const row = {
           translated_text: translated_text.translatedText,
@@ -81,7 +84,7 @@ export const POST = frames(async (ctx: any) => {
   return {
     image: (
       <div tw="flex flex-col text-[36px] space-y-4 justify-center items-center">
-        <p>{`You responded with ${translate_text}`}</p>
+        <p>{`You responded with ${translatedText}`}</p>
         <p>{`What you inputted: ${response}`}</p>
       </div>
     ),
@@ -99,6 +102,12 @@ export const POST = frames(async (ctx: any) => {
         target={`https://warpcast.com/~/compose?embeds[]=${`${APP_URL}/frames`}`}
       >
         Share
+      </Button>,
+      <Button
+        action="link"
+        target={`https://warpcast.com/${cast_info?.author.username}/${cast_info?.hash}`}
+      >
+        View cast
       </Button>,
     ],
   };
