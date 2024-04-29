@@ -5,6 +5,7 @@ import {
   add_or_update_signer_on_supabase,
   add_translation_to_supabase,
   get_all_translations_for_hash,
+  get_src_language_for_hash,
   lookup_fid_signer_on_supabase,
   update_signer_tip,
 } from "@/app/supabase";
@@ -49,8 +50,7 @@ export const POST = frames(async (ctx) => {
   let signer = await lookup_fid_signer_on_supabase(author_fid);
   if (signer) {
     if (signer.status === "approved") {
-      //look up hash
-      const hash_rows = await get_all_translations_for_hash(hash);
+      const hash_rows = await get_src_language_for_hash(hash);
       if (hash_rows && hash_rows.length > 0) {
         src_language = hash_rows[0].src_language;
       }

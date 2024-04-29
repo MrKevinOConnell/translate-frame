@@ -37,6 +37,24 @@ export async function check_if_hash_translated_language_exists(
   }
 }
 
+export async function get_src_language_for_hash(hash: string) {
+  try {
+    const { data, error } = await supabase
+      .from("translations")
+      .select("src_language")
+      .eq("hash", hash)
+      .limit(1);
+
+    if (error) {
+      console.error("Error fetching data:", error);
+      return;
+    }
+    return data;
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
 export async function get_all_translations_for_hash(hash: string) {
   try {
     const { data, error } = await supabase
