@@ -10,7 +10,7 @@ const handler = frames(async (ctx) => {
   return {
     image: (
       <div tw="flex flex-col">
-        <div tw="text-[52px] mb-4">Translation Action 🌎🌍🌏</div>
+        <div tw="text-[52px] mb-4">Farcaster Translator!</div>
         <div tw="text-[36px]">
           Install language or search for language code e.g. 'en' for English
         </div>
