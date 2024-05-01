@@ -17,9 +17,11 @@ import { neynar_client } from "@/app/neynar";
 import { sendEventToAmplitude } from "@/app/utils";
 
 const handler = frames(async (ctx: any) => {
+  console.log("ctx", ctx.message);
   if (!ctx.message.isValid) {
     throw new Error("Invalid Frame");
   }
+
   const translatorFid = ctx.message?.requesterFid;
   const hash = ctx.searchParams.hash;
   const fid = ctx.searchParams.fid;
