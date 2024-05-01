@@ -27,7 +27,7 @@ export const GET = (req: NextRequest) => {
   const languageName = languageNames.of(target);
 
   const actionMetadata: ActionMetadata = {
-    name: `Farcaster Translator: ${languageName} edition.`,
+    name: `Farcaster${languageName} translator.`,
     icon: "megaphone",
     description: `Translate ${languageNames.of(target)} to any language.`,
     aboutUrl: APP_URL!,
