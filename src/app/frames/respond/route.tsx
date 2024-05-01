@@ -62,11 +62,11 @@ export const POST = frames(async (ctx: any) => {
         //add to supabase
         const row = {
           translated_text: translated_text.translatedText,
-          translated_language: target,
+          translated_language: response,
           hash: cast.hash,
           author_fid: cast.author.fid,
           translator_fid: cast.author.fid,
-          src_text: response,
+          src_text: target,
           src_language: translated_text.srcLanguage,
         };
         add_translation_to_supabase(row);
