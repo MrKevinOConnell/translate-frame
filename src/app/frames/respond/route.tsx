@@ -20,7 +20,7 @@ export const POST = frames(async (ctx: any) => {
 
   const target = ctx.state.target;
   const response = ctx.message?.inputText;
-  sendEventToAmplitude(author_fid, "translation-open", {
+  sendEventToAmplitude(`${author_fid}-farcaster`, "translation-open", {
     hash: hash,
     cast_fid: cast_fid,
     src: target,

@@ -33,7 +33,7 @@ const handler = frames(async (ctx: any) => {
     fid,
     target,
   };
-  sendEventToAmplitude(translatorFid, "translation-open", {
+  sendEventToAmplitude(`${translatorFid}-farcaster`, "translation-open", {
     hash: hash,
     fid,
     target,

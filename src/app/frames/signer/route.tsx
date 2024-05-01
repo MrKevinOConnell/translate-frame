@@ -21,7 +21,7 @@ export const POST = frames(async (ctx: any) => {
   const { hash, fid, target } = state;
   const opt_in = Boolean(searchParams.opt_in);
   const translator_fid = message?.requesterFid as number;
-  sendEventToAmplitude(translator_fid.toString(), "signer-open", {
+  sendEventToAmplitude(`${translator_fid}-farcaster`, "signer-open", {
     hash: hash,
     fid,
     target,
@@ -31,7 +31,7 @@ export const POST = frames(async (ctx: any) => {
   if (signer && signer.status !== "approved") {
     signer = await lookup_neynar_signer(signer.signer_uuid);
     if (signer.status === "approved") {
-      sendEventToAmplitude(translator_fid.toString(), "signer-approve", {
+      sendEventToAmplitude(`${translator_fid}-farcaster`, "signer-approve", {
         hash: hash,
         fid,
         target,
