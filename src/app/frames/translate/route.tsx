@@ -33,11 +33,13 @@ const handler = frames(async (ctx: any) => {
     fid,
     target,
   };
-  sendEventToAmplitude(`${translatorFid}-farcaster`, "translation-open", {
-    hash: hash,
-    fid,
-    target,
-  });
+  if (translatorFid && hash && fid && target) {
+    sendEventToAmplitude(`${translatorFid}-farcaster`, "translation-open", {
+      hash: hash,
+      fid,
+      target,
+    });
+  }
   if (!hash) {
     return {
       image: <div tw="flex">No cast provided</div>,
