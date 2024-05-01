@@ -28,7 +28,7 @@ export const GET = (req: NextRequest) => {
 
   const actionMetadata: ActionMetadata = {
     name: `Translate to ${languageName}`,
-    icon: "globe",
+    icon: "lightbulb",
     description: `Farcaster translator: Translate ${languageNames.of(
       target
     )} to any language.`,
