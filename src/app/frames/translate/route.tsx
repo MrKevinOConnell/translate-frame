@@ -14,12 +14,13 @@ import {
 import { frames } from "../frames";
 import { translate_text } from "@/app/helpers/translation";
 import { neynar_client } from "@/app/neynar";
+import { sendEventToAmplitude } from "@/app/utils";
 
 const handler = frames(async (ctx: any) => {
   if (!ctx.message.isValid) {
     throw new Error("Invalid Frame");
   }
-  const translatorFid = 4564;
+  const translatorFid = ctx.message?.requesterFid;
   const hash = ctx.searchParams.hash;
   const fid = ctx.searchParams.fid;
   const target = ctx.searchParams.target ?? "EN";
@@ -30,6 +31,11 @@ const handler = frames(async (ctx: any) => {
     fid,
     target,
   };
+  sendEventToAmplitude(translatorFid, "translation-open", {
+    hash: hash,
+    fid,
+    target,
+  });
   if (!hash) {
     return {
       image: <div tw="flex">No cast provided</div>,

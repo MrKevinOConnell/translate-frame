@@ -8,6 +8,7 @@ import {
 import { neynar_client } from "@/app/neynar";
 import { APP_URL } from "@/app/env";
 import { translate_text } from "@/app/helpers/translation";
+import { sendEventToAmplitude } from "@/app/utils";
 
 export const POST = frames(async (ctx: any) => {
   if (!ctx.message.isValid) {
@@ -16,10 +17,18 @@ export const POST = frames(async (ctx: any) => {
   const hash = ctx.state.hash;
   const cast_fid = ctx.state.fid;
   const author_fid = ctx.message?.requesterFid;
+
   const target = ctx.state.target;
+  const response = ctx.message?.inputText;
+  sendEventToAmplitude(author_fid, "translation-open", {
+    hash: hash,
+    cast_fid: cast_fid,
+    src: target,
+    response: ctx.message?.inputText,
+  });
   const profile_info = await neynar_client.fetchBulkUsers([author_fid]);
   let src_language = null;
-  const response = ctx.message?.inputText;
+
   let translatedText = null;
   let cast_info = null;
 

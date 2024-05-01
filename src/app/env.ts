@@ -7,4 +7,5 @@ export const {
   SUPABASE_KEY,
   NEYNAR_BOT_SIGNER,
   APP_MNEMONIC,
+  AMPLITUDE_API,
 } = process.env;
