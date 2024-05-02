@@ -9,6 +9,7 @@ import { neynar_client } from "@/app/neynar";
 import { APP_URL } from "@/app/env";
 import { translate_text } from "@/app/helpers/translation";
 import { sendEventToAmplitude } from "@/app/utils";
+import { sign } from "crypto";
 
 export const POST = frames(async (ctx: any) => {
   if (!ctx.message.isValid) {
@@ -113,9 +114,11 @@ export const POST = frames(async (ctx: any) => {
       >
         View cast
       </Button>,
-      <Button action="post" target={`/signer?opt_in=true`}>
-        Tip 5% of allowance or 500 DEGEN every two weeks.
-      </Button>,
+      signer && signer.status === "approved" && signer.tip_opt_in ? (
+        <Button action="post" target={`/signer?opt_in=true`}>
+          Tip 5% of allowance or 500 DEGEN every two weeks.
+        </Button>
+      ) : null,
     ],
   };
 });

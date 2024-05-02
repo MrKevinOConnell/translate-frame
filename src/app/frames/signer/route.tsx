@@ -19,7 +19,7 @@ export const POST = frames(async (ctx: any) => {
   }
   const { state, searchParams, message } = ctx;
   const { hash, fid, target } = state;
-  const opt_in = Boolean(searchParams.opt_in);
+  const opt_in = Boolean(searchParams.opt_in) ?? false;
   const translator_fid = message?.requesterFid as number;
   sendEventToAmplitude(`${translator_fid}-farcaster`, "signer-open", {
     hash: hash,
