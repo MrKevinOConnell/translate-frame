@@ -11,9 +11,7 @@ const handler = frames(async (ctx) => {
     image: (
       <div tw="flex flex-col">
         <div tw="text-[52px] mb-4">Farcaster Translator!</div>
-        <div tw="text-[36px]">
-          Install language or search for language code e.g. 'en' for English
-        </div>
+        <div tw="text-[36px]">Pick your language (ex. EN, CN, KO)</div>
       </div>
     ),
     textInput: "Search a language code e.g. 'EN'",

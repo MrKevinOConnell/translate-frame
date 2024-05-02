@@ -114,7 +114,7 @@ export const POST = frames(async (ctx: any) => {
         View cast
       </Button>,
       <Button action="post" target={`/signer?opt_in=true`}>
-        Optionally tip 5% of allowance or 500 DEGEN every two weeks.
+        Tip 5% of allowance or 500 DEGEN every two weeks.
       </Button>,
     ],
   };

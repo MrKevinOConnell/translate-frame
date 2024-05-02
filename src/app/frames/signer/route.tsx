@@ -68,7 +68,7 @@ export const POST = frames(async (ctx: any) => {
           target={`/signer?opt_in=${opt_in ? "false" : "true"}`}
         >
           {opt_in
-            ? "Optionally tip 5% of allowance or 500 DEGEN every two weeks."
+            ? "Tip 5% of allowance or 500 DEGEN every two weeks."
             : "Opt out of tipping"}
         </Button>
       ),
